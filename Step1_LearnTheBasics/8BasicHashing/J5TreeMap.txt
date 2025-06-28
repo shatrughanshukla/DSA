@@ -1,0 +1,111 @@
+1. What is TreeMap?
+TreeMap is a map that keeps keys in sorted order.
+Internally, it uses a Red-Black Tree (self-balancing BST).
+    TreeMap<Integer, String> map = new TreeMap<>();
+    Unlike HashMap, which gives O(1) lookup but no order,
+    TreeMap gives log(n) operations with sorted keys.
+        How?
+            TreeMap is NOT based on Hashing
+            It’s based on a Self-Balancing Binary Search Tree, specifically a Red-Black Tree.
+            Red-Black Tree = Balanced BST
+                Normal BST ka worst case hota hai skewed (linked list ban jata hai), jiska time complexity O(n) hoti hai.
+            But Red-Black Tree follows certain rules to keep the height of the tree balanced, so that:
+                Height ≈ log₂(n)
+
+            Why Operations Are O(log n)?
+                Let’s say we are storing n elements.
+                Since Red-Black Tree's height is O(log n):
+                    | Operation       | What Happens Internally             | Time     |
+                    | --------------- | ----------------------------------- | -------- |
+                    | `put(k, v)`     | Travels tree height to insert node  | O(log n) |
+                    | `get(k)`        | Searches node like BST              | O(log n) |
+                    | `remove(k)`     | Finds and deletes node, re-balances | O(log n) |
+                    | `floorKey(k)`   | Walks tree to find ≤ k              | O(log n) |
+                    | `ceilingKey(k)` | Walks tree to find ≥ k              | O(log n) |
+
+                    Visual:
+                        Suppose you insert keys: 10, 20, 30, 15, 25
+                        Red-Black Tree keeps them like:
+                            20
+                           /   \
+                          10   30
+                           \   /
+                           15 25
+                        Height = log(n)
+                        So any operation = maximum log(n) comparisons or steps
+
+
+2. Real-world Analogy:
+Soch ek notebook jisme tu roll number → name likh raha hai
+But tu automatically roll number wise sorted likhta jaa raha hai.
+    Example:
+        TreeMap<Integer, String> map = new TreeMap<>();
+
+        map.put(30, "Rishav");
+        map.put(10, "Shubh");
+        map.put(20, "Tanya");
+
+        System.out.println(map);
+
+            Output:
+                {10=Shubh, 20=Tanya, 30=Rishav}
+        Sorted automatically by key!
+
+3. TreeMap Operations (Log(n) time)
+    | Operation      | Code Example                   | Time Complexity |
+    | -------------- | ------------------------------ | --------------- |
+    | Insert         | `map.put(k, v)`                | O(log n)        |
+    | Get            | `map.get(k)`                   | O(log n)        |
+    | Delete         | `map.remove(k)`                | O(log n)        |
+    | First Key      | `map.firstKey()`               | O(log n)        |
+    | Last Key       | `map.lastKey()`                | O(log n)        |
+    | Floor Key      | `map.floorKey(k)`              | O(log n)        |
+    | Ceiling Key    | `map.ceilingKey(k)`            | O(log n)        |
+    | Higher / Lower | `higherKey(k)` / `lowerKey(k)` | O(log n)        |
+
+
+4. TreeMap vs HashMap
+    | Feature            | `HashMap`           | `TreeMap`                    |
+    | ------------------ | ------------------  | ---------------------------  |
+    | Ordering           | ❌ No order         | ✅ Keys sorted               |
+    | Lookup time        | ✅ O(1) avg         | ⚠️ O(log n)                  |
+    | Null keys          | ✅ 1 allowed        | ❌ Not allowed               |
+    | DSA use-case       | ✅ Freq maps        | ✅ Range queries, floor/ceil |
+    | Internal structure | Array + LinkedList  | ✅ Red-Black Tree            |
+
+ 5. When to Use in DSA?
+    Use TreeMap when:
+        ✅ You want sorted key access
+        ✅ You want to quickly find:
+        ✅ floor (greatest key ≤ x)
+        ✅ ceil (smallest key ≥ x)
+    
+    Example Use-case:
+        TreeMap<Integer, String> map = new TreeMap<>();
+        map.put(10, "A");
+        map.put(20, "B");
+        map.put(30, "C");
+
+        System.out.println(map.floorKey(25));   // 20
+        System.out.println(map.ceilingKey(25)); // 30
+    This is not possible in HashMap!
+
+Code Summaray:
+    import java.util.*;
+
+    public class TreeMapDemo {
+        public static void main(String[] args) {
+            TreeMap<Integer, String> map = new TreeMap<>();
+
+            map.put(50, "Fifty");
+            map.put(20, "Twenty");
+            map.put(70, "Seventy");
+
+            System.out.println(map); // Sorted output
+
+            System.out.println("Floor of 65: " + map.floorKey(65));    // 50
+            System.out.println("Ceil of 65: " + map.ceilingKey(65));   // 70
+            System.out.println("First key: " + map.firstKey());        // 20
+            System.out.println("Last key: " + map.lastKey());          // 70
+        }
+    }

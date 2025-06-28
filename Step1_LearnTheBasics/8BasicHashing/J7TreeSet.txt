@@ -1,0 +1,108 @@
+1. What is TreeSet?
+    TreeSet is a Set (no duplicates) + Sorted Order combo
+    Internally uses a Red-Black Tree (Self-Balancing BST)
+    Sorted automatically when you add elements
+
+    Declaration:
+        TreeSet<Integer> set = new TreeSet<>();
+
+2. Example:
+    TreeSet<Integer> set = new TreeSet<>();
+
+    set.add(30);
+    set.add(10);
+    set.add(20);
+
+    System.out.println(set);  // → [10, 20, 30] (Sorted automatically)
+
+3. Internal Structure:
+    Based on TreeMap (just like HashSet uses HashMap)
+    Each element becomes a key in a TreeMap, sorted by natural order (or comparator if given)
+
+4. Key Features:
+    | Feature         | TreeSet                            |
+    | --------------- | ---------------------------------  |
+    | Duplicates      | ❌ Not allowed                     |
+    | Sorted          | ✅ Yes (natural order)             |
+    | Null elements   | ❌ Not allowed (in non-empty sets) |
+    | Time Complexity | O(log n)                           |
+    | Backed by       | TreeMap                            |
+TreeSet by default does not allow null, because:
+    TreeSet uses natural ordering → meaning compareTo() method internally.
+    And Java can't compare null with other objects → it throws NullPointerException.
+
+5. Common Methods
+    | Method          | Description          | Example                |
+    | --------------- | -------------------- | ---------------------- |
+    | `add(E e)`      | Add element          | `set.add(50);`         |
+    | `remove(E e)`   | Remove element       | `set.remove(10);`      |
+    | `contains(E e)` | Check presence       | `set.contains(20);`    |
+    | `first()`       | Return min element   | `set.first();`         |
+    | `last()`        | Return max element   | `set.last();`          |
+    | `higher(E e)`   | Smallest element > e | `set.higher(10);` → 20 |
+    | `lower(E e)`    | Largest element < e  | `set.lower(20);` → 10  |
+    | `ceiling(E e)`  | Smallest element ≥ e | `set.ceiling(15);`     |
+    | `floor(E e)`    | Largest element ≤ e  | `set.floor(15);`       |
+
+6. Example Code:
+
+    import java.util.*;
+
+    public class TreeSetDemo {
+        public static void main(String[] args) {
+            TreeSet<Integer> set = new TreeSet<>();
+
+            set.add(40);
+            set.add(10);
+            set.add(20);
+            set.add(30);
+
+            System.out.println(set);               // [10, 20, 30, 40]
+
+            System.out.println(set.first());       // 10
+            System.out.println(set.last());        // 40
+            System.out.println(set.higher(20));    // 30
+            System.out.println(set.lower(20));     // 10
+            System.out.println(set.ceiling(25));   // 30
+            System.out.println(set.floor(25));     // 20
+        }
+    }
+
+7. null Handling in TreeSet
+    TreeSet<String> set = new TreeSet<>();
+    set.add(null); // ❌ Throws NullPointerException
+ TreeSet does NOT allow null if set already has other elements.
+ Because sorting requires comparison (null can't be compared).
+
+8. When to Use TreeSet in DSA?
+    When you need:
+        Sorted set of unique elements
+        Get next/previous number quickly (like floor/ceil)
+        Efficient insert/remove/search in log(n) time
+
+Summary:
+    | Feature           | TreeSet                                    |
+    | ----------------- | -----------------------------------------  |
+    | Duplicate allowed | ❌ No                                      |
+    | Sorted?           | ✅ Yes (natural or custom order)           |
+    | Null allowed?     | ❌ No (throws exception)                   |
+    | Time complexity   | O(log n) for add/remove/contains           |
+    | Internal          | TreeMap (Red-Black Tree)                   |
+    | DSA Use-case      | ✅ Yes — Floor/Ceil, Ranks, Sliding Window |
+
+
+Quick Comparison Table — Java Hashing & Tree Types
+    | Feature                | `HashMap`                           | `TreeMap`                         | `HashSet`                 | `TreeSet`                               |
+    | ---------------------- | ----------------------------------- | --------------------------------- | ------------------------- | --------------------------------------- |
+    | **Duplicates?**        | ✅ Keys unique, values can repeat    | ✅ Keys unique, values can repeat  | ✅ No duplicates allowed   | ✅ No duplicates allowed                 |
+    | **Ordering**           | ❌ No order                          | ✅ Sorted by key (natural/custom)  | ❌ No order                | ✅ Sorted by element (natural/custom)    |
+    | **Null Allowed?**      | ✅ 1 null key, multiple null values  | ❌ No null key (throws error)      | ✅ 1 null allowed          | ❌ No null allowed (throws error)        |
+    | **Time Complexity**    | O(1) average (add/get/remove)       | O(log n) (because tree traversal) | O(1) average (add/remove) | O(log n) (self-balancing BST)           |
+    | **Internal Structure** | Hashing (`Array + LinkedList/Tree`) | Red-Black Tree (BST)              | Uses `HashMap` internally | Uses `TreeMap` internally               |
+    | **Use-case**           | Fast lookup, store key-value        | Sorted key-based map              | Fast unique element check | Sorted set operations (floor/ceil etc.) |
+    | **Allows Key-Value?**  | ✅ Yes                               | ✅ Yes                             | ❌ No (only values/keys)   | ❌ No (only values/keys)                 |
+
+
+Use HashMap/HashSet for fast lookup
+Use TreeMap/TreeSet when you need sorted order + floor/ceil operations
+Avoid null in TreeSet and TreeMap — they'll crash!

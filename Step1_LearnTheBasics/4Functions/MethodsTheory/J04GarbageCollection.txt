@@ -1,0 +1,179 @@
+Absolutely, let’s take this deep and very visual step by step, just like we’ve been doing. Your doubt revolves around **what happens when `main()` ends**, **how stack and heap interact**, and **how garbage collection kicks in**.
+
+---
+
+## 🎯 GOAL: Understand this line
+
+> "**If no other references to the heap objects exist, they become eligible for garbage collection**"
+
+And specifically — how this works when:
+
+```java
+Student s1 = new Student();
+```
+
+...is declared **inside `main()`** and `main()` ends.
+
+---
+
+## 🧠 Background: Stack vs Heap (Quick Recap)
+
+| Concept    | Stack                         | Heap                             |
+| ---------- | ----------------------------- | -------------------------------- |
+| Stores     | Method calls, local variables | Objects (`new`), class instances |
+| Lifetime   | Short-lived (per method)      | Long-lived (until GC'd)          |
+| Managed by | Java runtime                  | Java + Garbage Collector         |
+
+---
+
+## ✅ Code:
+
+```java
+class Student {
+    int id;
+    String name;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student(); // 🔗 Reference to Heap
+        s1.id = 101;
+        s1.name = "Shatrughan";
+    } // 🔚 main() ends here
+```
+
+---
+
+## 🔍 Step-by-Step Execution with Stack & Heap
+
+### 🔸 Step 1: Program Starts
+
+* JVM starts execution with `main()`.
+* A **stack frame** is created for `main()`.
+
+📦 **Stack:**
+
+```
+| s1 -> ???        |
+|------------------|
+| main() frame     |
+```
+
+📦 **Heap:**
+
+```
+(empty for now)
+```
+
+---
+
+### 🔸 Step 2: `new Student()` is executed
+
+* A new object of `Student` is created in **heap memory**.
+* Memory address (e.g., `0xABCD`) is returned.
+* `s1` in stack now points to that address.
+
+📦 **Stack:**
+
+```
+| s1 → 0xABCD       |
+|-------------------|
+| main() frame      |
+```
+
+📦 **Heap:**
+
+```
+0xABCD → Student {
+    id = 101,
+    name = "Shatrughan"
+}
+```
+
+---
+
+### 🔸 Step 3: `main()` Ends
+
+* The **stack frame for `main()` is removed**.
+* Hence, `s1` is **deleted** from stack.
+
+📦 **Stack:**
+
+```
+(empty — main() ended)
+```
+
+📦 **Heap:**
+
+```
+0xABCD → Student {
+    id = 101,
+    name = "Shatrughan"
+}
+```
+
+BUT:
+☠️ No variable is pointing to this `Student` object anymore!
+
+---
+
+### 🧹 Step 4: Garbage Collection Eligibility
+
+* JVM sees the object in heap at `0xABCD` is **no longer reachable**.
+* No reference exists in stack or in any other heap object.
+* Therefore, JVM marks it as **eligible for Garbage Collection**.
+
+> Important:
+> Garbage Collection **isn't immediate** — JVM will clean it up **when it thinks it's best** (based on memory pressure, GC algorithm etc.)
+
+---
+
+## ✅ So Final Answer to Your Doubt:
+
+> ❓ "If `s1` is declared in `main`, and main ends, does the object become eligible for GC?"
+
+**✅ YES. Because:**
+
+* `s1` was a **stack reference**
+* Once `main()` ends, **stack frame is gone**
+* **No other reference** to the object exists
+* Hence, **heap object becomes unreachable**, and GC can collect it
+
+---
+
+## 🔁 Optional: What if another reference existed?
+
+```java
+Student temp; // global or class-level
+
+public static void main(String[] args) {
+    Student s1 = new Student();
+    temp = s1; // now 2 references to the same heap object
+}
+```
+
+Then:
+
+📦 **Stack:**
+
+```
+(main frame destroyed after end)
+```
+
+📦 **Heap:**
+
+```
+0xABCD → Student { id = 101, name = "Shatrughan" }
+```
+
+📦 **Other:**
+
+```
+temp → 0xABCD  // still pointing
+```
+
+✅ Not eligible for GC yet.
+
+---
+
+Let me know if you’d like me to draw this memory flow visually in an image — happy to!

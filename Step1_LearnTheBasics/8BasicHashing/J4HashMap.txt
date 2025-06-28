@@ -1,0 +1,94 @@
+HashMap Common Uses in DSA:
+
+    | Problem Type          | Why HashMap?                   |
+    | --------------------- | ------------------------------ |
+    | Frequency count       | Fast lookup, insert            |
+    | Prefix sum tricks     | Save state at sum              |
+    | Sliding window hacks  | Track characters, elements     |
+    | Hashing based pairs   | Store seen numbers             |
+    | Custom object mapping | With `equals()` + `hashCode()` |
+
+What is a HashMap?
+
+    HashMap is a key-value based data structure.
+    Internally, it uses hashing to store and retrieve data in O(1) average time.
+        HashMap<Integer, String> map = new HashMap<>();
+        map.put(101, "Rishav");
+        map.get(101); // returns "Rishav"
+
+Basic Operations:
+
+    | Operation    | Code Example         | Time Complexity (avg) |
+    | ------------ | -------------------- | --------------------- |
+    | Insert (put) | `map.put(1, "A")`    | O(1)                  |
+    | Get (lookup) | `map.get(1)`         | O(1)                  |
+    | Delete       | `map.remove(1)`      | O(1)                  |
+    | Contains Key | `map.containsKey(1)` | O(1)                  |
+    | Iterate      | `for(Map.Entry...)`  | O(n)                  |
+
+Null Keys & Values
+
+    map.put(null, "first");  // ✅ allowed — only 1 null key
+    map.put(102, null);      // ✅ many null values allowed
+
+Example Code (Basic Operations)
+
+    import java.util.*;
+    public class Demo {
+        public static void main(String[] args) {
+            HashMap<Integer, String> map = new HashMap<>();
+
+            // Insertion
+            map.put(101, "Rishav");
+            map.put(102, "Shubh");
+
+            // Access
+            System.out.println(map.get(101));  // Rishav
+            System.out.println(map.get(103));  // null
+
+            // Contains
+            System.out.println(map.containsKey(102)); // true
+
+            // Deletion
+            map.remove(102);
+
+            // Iteration
+            for (Map.Entry<Integer, String> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + " → " + entry.getValue());
+            }
+        }
+    }
+
+map.entrySet() Summary — For Notes
+    for (Map.Entry<Integer, String> entry : map.entrySet()) {
+        System.out.println(entry.getKey() + " → " + entry.getValue());
+    }
+        ↓
+        map =
+            { 101 → "Rishav", 102 → "Shubh" }
+        ↓
+        map.entrySet() =
+            [ Entry(101, "Rishav"), Entry(102, "Shubh") ]
+        ↓
+        Map.Entry<K, V> = individual key-value pair object
+            → has getKey() and getValue() methods
+        ↓
+        Loop picks each entry from entrySet
+            → entry.getKey() = 101
+            → entry.getValue() = "Rishav"
+        ↓
+        Prints:
+            101 → Rishav  
+            102 → Shubh
+
+HashMap DSA Methods Summary (With Syntax):
+    | Method              | Use                                           | Example Syntax                             |
+    | ------------------- | --------------------------------------------- | ------------------------------------------ |
+    | `keySet()`          | Loop over keys only                           | `for (Integer key : map.keySet())`         |
+    | `values()`          | Loop over values only                         | `for (String val : map.values())`          |
+    | `entrySet()`        | Loop over key-value pairs                     | `for (Map.Entry<K, V> e : map.entrySet())` |
+    | `getOrDefault(k,d)` | Default value for missing key (super DSA use) | `map.getOrDefault(num, 0)`                 |
+    | `putIfAbsent()`     | Insert only if key not present                | `map.putIfAbsent("Rishav", "Coder")`       |
+    | `replace()`         | Update value for existing key                 | `map.replace("Rishav", "Developer")`       |
+    | `isEmpty()`         | Map empty or not                              | `map.isEmpty()`                            |
+    | `size()`            | Number of pairs                               | `map.size()`                               |

@@ -1,0 +1,79 @@
+Bhai solid sawaal! 👏 Tu system ke **core limits** ko samajhne nikla hai — respect!
+Ab main tujhe **line-by-line aur bit-by-bit** samjhaata hoon **kyun `Integer.MAX_VALUE = 2,147,483,647` hota hai**.
+
+---
+
+## 🔧 Step-by-Step Reasoning:
+
+### 🧠 Java `int` Basics:
+
+* Java `int` = **32 bits**
+* It is a **signed integer** → One bit is used for the **sign (+/–)**.
+* So:
+
+  ```
+  1 bit → sign
+  31 bits → value
+  ```
+
+---
+
+### 🧮 Maximum Value of 31 Bits:
+
+Now let’s find the **largest number you can make with 31 bits**, all set to `1`:
+
+```
+Binary: 01111111111111111111111111111111
+```
+
+(The first `0` is for the sign → positive)
+
+Now convert this to decimal:
+
+```
+= 2³¹ - 1
+= 2,147,483,648 - 1
+= 2,147,483,647 ✅
+```
+
+---
+
+### 🔁 Why `–1`?
+
+Because:
+
+* If all 31 bits are `1`, that’s `2³¹ - 1` (since `0` is also a number)
+* So max positive value is **`2³¹ – 1 = 2,147,483,647`**
+
+---
+
+### 💥 Extra: What if it overflows?
+
+If you go one more than `2,147,483,647`, you get:
+
+```
+10000000000000000000000000000000 → now sign bit is 1 → becomes negative!
+```
+
+It wraps around to:
+
+```
+-2,147,483,648  (i.e., Integer.MIN_VALUE)
+```
+
+---
+
+## ✅ Summary:
+
+| Concept              | Value                   |
+| -------------------- | ----------------------- |
+| Java `int` bits      | 32                      |
+| Sign bit             | 1                       |
+| Value bits           | 31                      |
+| Max value formula    | `2³¹ – 1`               |
+| Max value in decimal | **2,147,483,647** ✅     |
+| Min value            | `-2³¹ = -2,147,483,648` |
+
+---
+
+Agar tu chaahe toh main tujhe `long`, `short`, `byte` ka range bhi bit-based breakdown ke saath dedu — bole toh ek complete chart banadu bhai?

@@ -1,0 +1,116 @@
+Sure bhai! Let's break down all the commonly used components of the `Math` object in **JavaScript**. This is a **built-in object** that provides properties and methods for mathematical constants and functions.
+
+I'll explain them in a grouped and simple way, with **examples** so you can remember easily.
+
+---
+
+### ✅ **1. Basic Utility Functions**
+
+These are commonly used to find max/min, absolute value, etc.
+
+| Function              | Description                                            | Example                   |
+| --------------------- | ------------------------------------------------------ | ------------------------- |
+| `Math.max(a, b, ...)` | Returns the **largest** number                         | `Math.max(3, 5, 1)` → `5` |
+| `Math.min(a, b, ...)` | Returns the **smallest** number                        | `Math.min(3, 5, 1)` → `1` |
+| `Math.abs(x)`         | Returns the **absolute** value (no negative)           | `Math.abs(-4)` → `4`      |
+| `Math.sign(x)`        | Returns `1` if positive, `-1` if negative, `0` if zero | `Math.sign(-3)` → `-1`    |
+
+---
+
+### ✅ **2. Rounding Functions**
+
+Used to round numbers in different ways.
+
+| Function        | Description                        | Example                                          |
+| --------------- | ---------------------------------- | ------------------------------------------------ |
+| `Math.round(x)` | Rounds to the nearest integer      | `Math.round(4.6)` → `5`, `Math.round(4.4)` → `4` |
+| `Math.floor(x)` | Rounds **down** to nearest integer | `Math.floor(4.9)` → `4`                          |
+| `Math.ceil(x)`  | Rounds **up** to nearest integer   | `Math.ceil(4.1)` → `5`                           |
+| `Math.trunc(x)` | Removes decimal part               | `Math.trunc(4.7)` → `4`                          |
+
+---
+
+### ✅ **3. Power and Roots**
+
+For exponentiation and square roots.
+
+| Function              | Description                  | Example                |
+| --------------------- | ---------------------------- | ---------------------- |
+| `Math.pow(base, exp)` | `base` raised to power `exp` | `Math.pow(2, 3)` → `8` |
+| `Math.sqrt(x)`        | Square root                  | `Math.sqrt(16)` → `4`  |
+| `Math.cbrt(x)`        | Cube root                    | `Math.cbrt(27)` → `3`  |
+
+👉 ES6 introduced `**` for power: `2 ** 3` → `8`
+
+---
+
+### ✅ **4. Random & Constants**
+
+Useful in games, probability, etc.
+
+| Function / Constant | Description                               | Example                       |
+| ------------------- | ----------------------------------------- | ----------------------------- |
+| `Math.random()`     | Returns random number between `0` and `1` | `Math.random()` → `0.3456...` |
+| `Math.PI`           | Value of π (Pi)                           | `Math.PI` → `3.14159...`      |
+| `Math.E`            | Euler's number (≈ 2.718)                  | `Math.E` → `2.718...`         |
+
+👉 Random in a range:
+
+```js
+// Random number between 1 and 100
+Math.floor(Math.random() * 100) + 1;
+```
+
+---
+
+### ✅ **5. Trigonometric Functions**
+
+Used in geometry, graphics, etc.
+
+| Function      | Description                | Example                       |
+| ------------- | -------------------------- | ----------------------------- |
+| `Math.sin(x)` | Sine of angle (in radians) | `Math.sin(Math.PI / 2)` → `1` |
+| `Math.cos(x)` | Cosine                     | `Math.cos(0)` → `1`           |
+| `Math.tan(x)` | Tangent                    | `Math.tan(0)` → `0`           |
+
+👉 All angles must be in **radians**.
+
+---
+
+### ✅ **6. Logarithmic Functions**
+
+Used in advanced math, algorithms, etc.
+
+| Function        | Description          | Example                  |
+| --------------- | -------------------- | ------------------------ |
+| `Math.log(x)`   | Natural log (base e) | `Math.log(Math.E)` → `1` |
+| `Math.log10(x)` | Base-10 log          | `Math.log10(1000)` → `3` |
+| `Math.log2(x)`  | Base-2 log           | `Math.log2(8)` → `3`     |
+
+---
+
+### ✅ **7. Exponential & Miscellaneous**
+
+| Function                    | Description                            | Example                                    |
+| --------------------------- | -------------------------------------- | ------------------------------------------ |
+| `Math.exp(x)`               | Returns e^x                            | `Math.exp(1)` → `2.718...`                 |
+| `Math.hypot(x, y, ...args)` | Returns sqrt(x² + y² + ...)            | `Math.hypot(3, 4)` → `5` (like Pythagoras) |
+| `Math.clz32(x)`             | Counts leading zeroes in 32-bit binary | `Math.clz32(1)` → `31`                     |
+
+---
+
+### 🔁 Summary Chart:
+
+| Type                   | Functions                 |
+| ---------------------- | ------------------------- |
+| **Basic**              | max, min, abs, sign       |
+| **Rounding**           | round, floor, ceil, trunc |
+| **Power & Roots**      | pow, sqrt, cbrt           |
+| **Random & Constants** | random, PI, E             |
+| **Trig**               | sin, cos, tan             |
+| **Logs**               | log, log10, log2          |
+| **Others**             | exp, hypot, clz32         |
+
+---
+
+If you want, I can also give you a **cheat sheet PDF** or a **short interactive quiz** to help remember these. Just let me know, bhai!

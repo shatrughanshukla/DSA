@@ -1,0 +1,130 @@
+1. What is HashSet?
+    HashSet is a data structure that:
+        Stores only unique elements
+        No duplicates allowed
+        Based on HashMap internally
+    Declaration:
+        HashSet<Integer> set = new HashSet<>();
+            Internally:
+                Behind the scenes →
+                HashSet uses HashMap<E, Object> and stores value in key with a dummy object.
+
+2. Internal Structure:
+    HashSet stores only keys → unique elements
+    Internally, each element is treated as a key in a HashMap
+
+    Internals of HashSet:
+        When you write:
+            HashSet<String> set = new HashSet<>();
+            set.add("Rishav");
+        then internally this happens:
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("Rishav", DUMMY);
+        Here:
+            "Rishav" → key
+            DUMMY → ek constant dummy object (private static final Object PRESENT = new Object();)
+
+    Visual:
+        set.add(10);
+        set.add(20);
+    Internally:
+        map = {
+        10 → dummyObject,
+        20 → dummyObject
+        }
+    We can only see keys, dummy values can't be used by anyone.
+
+    NOTE:
+        HashSet stores only unique elements as keys internally using a HashMap<K, Object>
+        Dummy values are hidden — only the set of keys matters.
+
+3. Key Features:
+    | Feature         | HashSet                                 |
+    | --------------- | --------------------------------------  |
+    | Duplicates      | ❌ Not allowed                          |
+    | Null elements   | ✅ Allowed (only one null)              |
+    | Ordering        | ❌ No guaranteed order                  |
+    | Time Complexity | ✅ O(1) average for add/remove/contains |
+    | Backed by       | `HashMap`                               |
+
+4. Example Usage:
+
+    HashSet<String> names = new HashSet<>();
+
+    names.add("Rishav");
+    names.add("Shubh");
+    names.add("Rishav"); // Duplicate — will be ignored
+
+    System.out.println(names);  // Output: [Rishav, Shubh] — order not guaranteed
+
+5. Common HashSet Methods:
+    | Method          | Description                       | Example Syntax                                     |
+    | --------------- | --------------------------------- | -------------------------------------------------- |
+    | `add(E e)`      | Add element if not present        | `set.add(10);`                                     |
+    | `remove(E e)`   | Removes element if present        | `set.remove(20);`                                  |
+    | `contains(E e)` | Checks if element exists          | `set.contains(30); // true/false`                  |
+    | `isEmpty()`     | Checks if set is empty            | `set.isEmpty(); // returns true/false`             |
+    | `size()`        | Returns number of unique elements | `set.size();`                                      |
+    | `clear()`       | Removes all elements              | `set.clear();`                                     |
+    | `iterator()`    | Loop through the set              | `for (int val : set) { System.out.println(val); }` |
+
+6. DSA Use-Cases
+HashSet is useful in DSA problems like:
+    | Problem Type                   | Usage                               |
+    | ------------------------------ | ----------------------------------- |
+    | Duplicates check               | Check if element seen before        |
+    | Unique values count            | Store unique items                  |
+    | Subarrays/strings uniqueness   | Store window elements or substrings |
+    | Union / Intersection of arrays | Store in sets                       |
+    | Two Sum variations             | `target - num` in set?              |
+
+7. Time Complexities (Avg Case):
+    | Operation    | Time Complexity |
+    | ------------ | --------------- |
+    | `add()`      | O(1)            |
+    | `remove()`   | O(1)            |
+    | `contains()` | O(1)            |
+    | `size()`     | O(1)            |
+    | `iterator()` | O(n)            |
+ In worst-case (hash collisions) → time becomes O(n)
+
+8. Caution:
+    | Thing               | Warning                   |
+    | ------------------- | ------------------------  |
+    | Order?              | ❌ No order               |
+    | Duplicate elements? | ❌ Not allowed            |
+    | Multiple nulls?     | ❌ Only 1 allowed         |
+    | Index access?       | ❌ Not allowed (not list) |
+
+        Null Handling Rules in HashSet:
+            | Condition                  | Behavior               |
+            | -------------------------- | ---------------------  |
+            | `set.add(null)`            | ✅ Allowed once        |
+            | `set.add(null)` again      | ❌ Ignored (duplicate) |
+            | `set.contains(null)`       | ✅ Works fine          |
+            | `set.remove(null)`         | ✅ Removes null        |
+            | `set.iterator()` with null | ✅ Iterates fine       |
+
+9. Example Code:
+
+    import java.util.*;
+    public class HashSetDemo {
+        public static void main(String[] args) {
+            HashSet<Integer> set = new HashSet<>();
+
+            set.add(10);
+            set.add(20);
+            set.add(10); // Duplicate ignored
+
+            System.out.println(set.contains(10)); // true
+            System.out.println(set.contains(30)); // false
+
+            for (int val : set) {
+                System.out.println(val);
+            }
+
+            set.remove(20);
+            System.out.println("Size: " + set.size());
+        }
+    }
+

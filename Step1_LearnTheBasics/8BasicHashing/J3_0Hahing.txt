@@ -1,0 +1,170 @@
+                                        "How does hashing work internally in Java?"
+
+Part 1: What is Hashing Internally?
+        Hashing is the process of converting a key into an index using a hash function, so we can store/retrieve data efficiently in a hash-based data structure like HashMap, HashSet.
+    Internals Flow (High Level)
+        when you do,
+            map.put("apple", 10);
+            Here's what happens behind the scenes:
+                1. "apple".hashCode() is called → converts key to an integer (say, 93029210)
+                2.  Java calculates:
+                        index = hash % array.length
+                3.  If that bucket is empty, store the entry.
+                4.  If collision happens (multiple keys map to same index), Java uses LinkedList or Tree to store them efficiently.
+
+Part 2: The hashCode() Function
+    Every object in Java has a method called .hashCode()
+            String key = "apple";
+            int hash = key.hashCode();
+            System.out.println(hash);  // Example: 93029210
+        This hashCode is used to determine where to store the data in an internal array.
+
+    Important Rule:
+        If two keys are equal (i.e. key1.equals(key2)), then:
+            key1.hashCode() == key2.hashCode()
+        must be true — this is Java's hashing contract.
+
+    Example: HashMap Storage Mechanism
+        Behind the scenes, HashMap stores data in an array of Nodes (buckets):
+            class Node<K, V> {
+                K key;
+                V value;
+                Node<K, V> next;  // for handling collisions using LinkedList
+            }
+        Imagine a table with 16 buckets (by default):
+            Index     Key-Value
+            ---------------------
+            0         null
+            1         [“mango” → 5] → [“lemon” → 2]
+            2         null
+            ...
+
+        Let’s say:
+            map.put("mango", 5);
+        1. "mango".hashCode() → 987654321
+        2. index = hash % 16 → say, 1
+        3. It’s stored at bucket 1
+
+        Now, if "lemon" also gives index = 1, it’s chained using LinkedList.
+
+    What if too many collisions?
+        If one bucket gets too many keys → Java changes the linked list into a Red-Black Tree (after threshold ~8 entries) for faster lookup (O(log N) instead of O(N)).
+
+    Java Hashing Workflow — Full Diagram
+
+                ┌────────────┐
+        Key ---> │ hashCode() │ ----> Integer hash
+                └─────┬──────┘
+                        ↓
+                Apply hashing function (internal mix & spread)
+                        ↓
+                Modulo with table size (capacity)
+                        ↓
+                Get Bucket Index (0 to 15)
+                        ↓
+            ┌────────────────────────────┐
+            │ Store in Node[BucketIndex]│
+            └────────────────────────────┘
+
+part 3: 
+    ⚠️ Do not override only hashCode() without equals() when creating custom key classes — it breaks consistency.
+
+        Full Flow from ZERO: 
+            Step 1: Just Creating Objects
+                    Student s1 = new Student(1, "Rishav");
+                    Student s2 = new Student(1, "Rishav");
+                Tere dimaag mein seedha aata hai:
+                “Arre bhai id bhi same, name bhi same — toh ye dono same student hi hue!”
+                    But what java thinks:
+                        s1 → memory location 0xA1 → {1, "Rishav"}
+                        s2 → memory location 0xB2 → {1, "Rishav"}
+                    Java thinks they are on diff places i.e they are diff objects.
+
+                            NOTE: Here,
+                                "s1" naam ka ek object key hai, jisme id = 1, name = "Rishav"
+                                "Coder" us key se associated value hai.
+                            So:
+                                "Rishav" is just a field (data) inside the object s1
+                                map.put(s1, "Coder") ka matlab hai:
+                                    "s1" naam ka object → map mein key ban gaya
+                                    uske against "Coder" value store ho gayi
+
+                            "As Java is language of objects and classes, we need an object to store value for the student with id 1 and name Rishav."
+
+            Step 2: You'll Compare Objects
+                    System.out.println(s1 == s2);      // false
+                    System.out.println(s1.equals(s2)); // also false
+                Why == false?
+                    Because it compares reference (memory address)
+                Why .equals() false?
+                    Because by default, Java’s .equals() also does the same thing as == (unless you override it)
+
+            Step 3: The REAL Problem Begins
+                You'll say
+                    “Thik hai bhai. Ab mai ek map banata hoon:”
+                        HashMap<Student, String> map = new HashMap<>();
+                        map.put(s1, "Coder");
+                    So that, you can make this object as key to store "Coder"
+                But, Ab tu dobara wahi student ka data laata hai, lekin ek nayi object ban jaati:
+                        Student s2 = new Student(1, "Rishav");
+                        System.out.println(map.get(s2)); // null
+                    Now, you're in shock:
+                        "Bhai same hi value hai, fir bhi value kyun nahi mili?"
+             Here's the Realisation:
+                HashMap works like this:
+                    1. Jab tu .put(s1, "Coder") karta hai:
+                            Java karta hai: s1.hashCode() → Bucket milta hai
+                            Us bucket mein rakhta hai s1
+                    2. Jab tu .get(s2) karta hai:
+                            Java karta hai: s2.hashCode() → Bucket dhundhta hai
+                            Us bucket mein dekhke s2.equals(existingKey) karta hai
+                    But:
+                        s2.hashCode() is different (because object is new)
+                        s2.equals(existingKey) bhi false (kyunki tune override nahi kiya)
+
+        And from here the concept of equals() + hashCode() starts...ou
+            You have to tell Java:
+                “Agar id aur name dono same ho, toh yeh same Student samjho.
+            Then you'll Override:
+                .equals():
+                    Batata hai ki do objects value-wise same hain ya nahi
+                .hashCode():
+                    Batata hai ki object ko kis bucket mein daala jaye (for HashMap)
+
+        Note: Why equals() and hashCode() are needed in Java maps
+            In Java, everything is object-based. When we store an object (like a Student with id x and name y) as a key in a HashMap, it gets stored based on the object's memory reference and its hash code.
+            Later, if we try to fetch the value using a new object with the same id and name (but a different memory address), Java will not return the value, because:
+                The hash code is different
+                Java compares object references, not values, unless we override .equals() and .hashCode()
+            So, if we don't remember or reuse the exact object used for put(), we must override these methods to fetch values correctly using logically equivalent objects.
+
+    Object Class:
+        Object class is already part of Java by default.
+        You don’t need to import it manually because:
+            🔸 Object is the root (top-most) class of all classes in Java.
+            🔸 Every class you write automatically inherits from Object, even if you don’t say extends Object.
+        Java Mein Har Class Internally:
+            class Student extends Object {
+                ...
+            }
+        Even though you didn’t write extends Object, Java ne usse already bana diya hai.
+
+    That's why you can always override methods from Object, like:
+
+        | Method from `Object` | Purpose                 |
+        | -------------------- | ----------------------- |
+        | `equals(Object o)`   | Checks equality         |
+        | `hashCode()`         | Returns hash            |
+        | `toString()`         | Prints object as string |
+        | `getClass()`         | Tells class info        |
+        | `clone()`            | Copies object           |
+
+        This:
+        this == o
+            Student s1 = new Student(1, "Rishav");
+            s1.equals(s2); 
+                | Keyword | Points to                                |
+                | ------- | ---------------------------------------- |
+                | `this`  | s1 (the object calling the method)       |
+                | `o`     | s2 (the object being passed as argument) |
+
