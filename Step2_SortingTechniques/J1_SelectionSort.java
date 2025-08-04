@@ -2,8 +2,8 @@ package DSA.Step2_SortingTechniques;
 
 /*
 
-Given an array of integers called nums,sort the array in non-decreasing order using the bubble sort algorithm and return the sorted array.
-    A sorted array in non-decreasing order is an array where each element is greater than or equal to all preceding elements in the array.
+Given an array of integers nums, sort the array in non-decreasing order using the selection sort algorithm and return the sorted array.
+    A sorted array in non-decreasing order is an array where each element is greater than or equal to all previous elements in the array.
         Examples:
             Input: nums = [7, 4, 1, 5, 3]
             Output: [1, 3, 4, 5, 7]
@@ -15,29 +15,35 @@ Given an array of integers called nums,sort the array in non-decreasing order us
             Explanation: 1 <= 1 <= 4 <= 4 <= 5.
             Thus the array is sorted in non-decreasing order.
 
-*/
+            Constraints:
+            1 <= nums.length <= 1000
+            -104 <= nums[i] <= 104
+            nums[i] may contain duplicate values.
+
+ */
+
 import java.util.Scanner;
+
 class Solution {
-    public int[] bubbleSort(int[] nums) {
-        for(int i = nums.length - 1; i >= 0; i--){
-            int didSwap = 0;
-            for(int j = 0; j < i; j++){
-                if (nums[j] > nums[j+1]) {
-                    int temp = nums[j];
-                    nums[j] = nums[j+1];
-                    nums[j+1] = temp;
-                    didSwap = 1;
+    public int[] selectionSort(int[] nums) {
+        for(int i = 0; i <= nums.length-2; i++){
+            int min = i;
+            for(int j = i; j <= nums.length - 1; j++){
+                if(nums[j] < nums[min]){
+                    min = j;
                 }
             }
-            if (didSwap == 0) {
-                break;
-            }
+            // swap
+                int temp;
+                temp = nums[i];
+                nums[i] = nums[min];
+                nums[min] = temp;
         }
         return nums;
     }
 }
 
-public class J4_BubbleSort {
+public class J1_SelectionSort {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         try{
@@ -54,7 +60,7 @@ public class J4_BubbleSort {
                 System.out.print(arr[i]);
                 System.out.println();
             }
-            obj.bubbleSort(arr);
+            obj.selectionSort(arr);
             System.out.println("Sorted Array: ");
             for(int i = 0; i < n; i++){
                 System.out.print(arr[i]);
@@ -65,4 +71,3 @@ public class J4_BubbleSort {
         }
     }
 }
-// worst and average can be O(n^2) and the best is O(n).

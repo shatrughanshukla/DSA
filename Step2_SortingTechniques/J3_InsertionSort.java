@@ -42,7 +42,7 @@ class Solution {
     }
 }
 
-public class J6_InsertionSort {
+public class J3_InsertionSort {
      public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         try{

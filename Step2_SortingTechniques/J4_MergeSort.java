@@ -39,7 +39,7 @@ class Solution {
     }
 }
 
-public class J8_MergeSort{
+public class J4_MergeSort{
     // public static void main(String[] args) {
     //     Scanner sc = new Scanner(System.in);
     //     try{
