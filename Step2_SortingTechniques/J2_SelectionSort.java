@@ -1,4 +1,4 @@
-package DSA.Step2_ImportantSortingTechniques;
+package DSA.Step2_SortingTechniques;
 
 /*
 
