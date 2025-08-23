@@ -121,5 +121,6 @@ public class J10_SingleNumber {
                 Checking if any element matches a condition
             Think of it like: “I just want every element one by one.”
 
+
         */
     }
