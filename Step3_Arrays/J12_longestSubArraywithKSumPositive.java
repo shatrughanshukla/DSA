@@ -33,10 +33,68 @@ Better Brute Force Approach(mine):
         Space Complexity - O(1)
  
 Better Approach(Using Hashing)
+// User function Template for Java
 
-
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        // using Hashing.
+        int n = arr.length;
+        Map<Long, Integer> preSumMap = new HashMap<>();
+        long sum = 0;
+        int maxLen = 0;
+        for(int i = 0; i < n; i++){
+            sum += arr[i];
+            if(sum == k){
+                maxLen = Math.max(maxLen, i+1);
+            }
+            long rem = sum - k;
+            if(preSumMap.containsKey(rem)){
+                int len = i - preSumMap.get(rem);
+                maxLen = Math.max(maxLen, len);
+            }
+            if(!preSumMap.containsKey(sum)){
+                preSumMap.put(sum, i);
+            }
+        }
+        return maxLen;
+    }
+}
 */
 
+/*
+Optimal Approach using two pointer and greedy for positives and zeroes:
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        // Using Two Pointers (Sliding Window) - works only for positives & zeroes
+        int n = arr.length;
+        int left = 0, right = 0;
+        long sum = arr[0];
+        int maxLen = 0;
+
+        while (right < n) {
+            // Shrink window from left if sum exceeds k
+            while (left <= right && sum > k) {
+                sum -= arr[left];
+                left++;
+            }
+
+            // If sum equals k, update max length
+            if (sum == k) {
+                maxLen = Math.max(maxLen, right - left + 1);
+            }
+
+            // Expand window to right
+            right++;
+            if (right < n) {
+                sum += arr[right];
+            }
+        }
+
+        return maxLen;
+    }
+}
+
+*/
 public class J12_longestSubArraywithKSumPositive {
     
 }
