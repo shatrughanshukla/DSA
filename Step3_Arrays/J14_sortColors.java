@@ -34,6 +34,35 @@
         }
     }
 
+    Brute Force Approach II:
+    class Solution {
+        public void sortColors(int[] nums) {
+            int n = nums.length;
+            int i = 0;
+            int j = n - 1;
+
+            while (i < n) {
+                // reset j for every i
+                j = n - 1;
+
+                while (j > i) {
+                    if (nums[i] > nums[j]) {
+                        swap(nums, i, j);
+                    }
+                    j--;
+                }
+                i++;
+            }
+        }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+
     Optimal Approach: 
 
     class Solution {
