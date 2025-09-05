@@ -17,6 +17,8 @@ class Solution {
         return store;
     }
 }
+TC: O(n2);
+SC: O(1);
 
 Optimal Approach:
 class Solution {
@@ -32,7 +34,8 @@ class Solution {
         return maxii;
     }
 }
-
+TC:(n);
+SC:(1;
 */
 
 public class J16_MaxSubArrays {
