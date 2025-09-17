@@ -25,6 +25,5 @@ class Solution {
 */
 
 class J18_RearrangeArrayElementBySign {
-
     
 }
