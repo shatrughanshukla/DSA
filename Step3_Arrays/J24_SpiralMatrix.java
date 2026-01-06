@@ -1,0 +1,48 @@
+/* 
+
+https://leetcode.com/problems/spiral-matrix/description/
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List result = new ArrayList<>();
+        int top = 0;
+        int left = 0;
+        int right = matrix[0].length - 1;
+        int bottom = matrix.length - 1;
+
+        while(left <= right && top <= bottom){
+            // right
+            for(int i = left; i <= right; i++){
+                result.add(matrix[top][i]);
+            }
+            top++;
+
+            // botom
+            for(int i = top; i <= bottom; i++){
+                result.add(matrix[i][right]);
+            }
+            right--;
+
+            // left
+            if(top <= bottom){
+                for(int i = right; i >= left; i--){
+                    result.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+
+            // top
+            if(left <= right){
+                for(int i = bottom; i >= top; i--){
+                    result.add(matrix[i][left]);
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+}
+
+https://www.notion.so/24SpiralMatrix-2dff51bd6dd180e2aaa9f718da2b8b2b?source=copy_link
+
+*/
